@@ -1,10 +1,16 @@
 require "bundler/gem_tasks"
 require "rake/testtask"
 
-Rake::TestTask.new(:test) do |t|
-  t.libs << "test"
-  t.libs << "lib"
-  t.test_files = FileList["test/**/*_test.rb"]
+unless ENV['RACK_ENV'] == 'production'
+  require 'rspec/core'
+  require 'rspec/core/rake_task'
+
+  RSpec::Core::RakeTask.new(:spec) do |spec|
+    spec.pattern = FileList['spec/**/*_spec.rb']
+  end
+
+  task default: [:spec]
 end
 
-task :default => :test
+Dir.glob('lib/tasks/*.rake').each { |r| load r}
+
