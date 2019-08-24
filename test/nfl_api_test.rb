@@ -1,11 +1,7 @@
 require "test_helper"
 
-class NflApiTest < Minitest::Test
+class NFLApiTest < Minitest::Test
   def test_that_it_has_a_version_number
-    refute_nil ::NflApi::VERSION
-  end
-
-  def test_it_does_something_useful
-    assert false
+    refute_nil ::NFLApi::VERSION
   end
 end
