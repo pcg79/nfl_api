@@ -1,4 +1,9 @@
 module NFLApi
-  class Game
+  class Game < Base
+
+    private
+
+    def self.endpoint
+    end
   end
 end
