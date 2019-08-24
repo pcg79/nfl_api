@@ -59,6 +59,16 @@ module NFLApi
       end
     end
 
+    def self.season(season_number)
+      return nil unless season_number
+
+      teams = parse_json(season_specific_endpoint(season_number))["teams"]
+
+      teams.map do |team_data|
+        Team.new(team_data)
+      end
+    end
+
     private
 
     def set_conference(conference_params)
@@ -93,6 +103,10 @@ module NFLApi
 
     def self.endpoint
       "http://www.nfl.com/feeds-rs/teams.json"
+    end
+
+    def season_specific_endpoint(season_number)
+      "http://www.nfl.com/feeds-rs/teams/#{season_number}.json"
     end
   end
 end
