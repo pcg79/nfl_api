@@ -26,6 +26,12 @@ describe NFLApi::Team do
       expect(described_class.season(nil)).to be_nil
     end
 
+    it "returns nil if no data is received from the API" do
+      expect(described_class).to receive(:parse_json).with("http://www.nfl.com/feeds-rs/teams/1938.json").and_return(nil)
+
+      expect(described_class.season(1938)).to be_nil
+    end
+
     it "returns the correct number of teams for a prior season" do
       expect(described_class).to receive(:season_specific_endpoint).and_return(season_specific_endpoint)
 

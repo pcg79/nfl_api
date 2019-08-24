@@ -61,8 +61,11 @@ module NFLApi
 
     def self.season(season_number)
       return nil unless season_number
+      json_data = parse_json(season_specific_endpoint(season_number))
 
-      teams = parse_json(season_specific_endpoint(season_number))["teams"]
+      return nil unless json_data
+
+      teams = json_data["teams"]
 
       teams.map do |team_data|
         Team.new(team_data)
