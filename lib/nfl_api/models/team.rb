@@ -105,7 +105,7 @@ module NFLApi
       "http://www.nfl.com/feeds-rs/teams.json"
     end
 
-    def season_specific_endpoint(season_number)
+    def self.season_specific_endpoint(season_number)
       "http://www.nfl.com/feeds-rs/teams/#{season_number}.json"
     end
   end
