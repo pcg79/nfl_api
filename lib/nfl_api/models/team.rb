@@ -29,7 +29,7 @@ module NFLApi
 
     def initialize(params)
       @season = params["season"]
-      @id = params["team_id"]
+      @id = params["teamId"].to_i
 
       @abbr = params["abbr"]
       @city_state = params["cityState"]
