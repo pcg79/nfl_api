@@ -29,7 +29,7 @@ module NFLApi
 
     def initialize(params)
       @season = params["season"]
-      @id = params["team_id"]
+      @id = params["teamId"].to_i
 
       @abbr = params["abbr"]
       @city_state = params["cityState"]
@@ -59,8 +59,13 @@ module NFLApi
       end
     end
 
-    def self.season(season_number)
-      return nil unless season_number
+    def self.by_team(name_or_id)
+      all.detect { |t| [t.id, t.full_name].include? name_or_id }
+    end
+
+    def self.by_season(season_number)
+      return nil if season_number.to_i < NFLApi::NFL_START_YEAR
+
       json_data = parse_json(season_specific_endpoint(season_number))
 
       return nil unless json_data
@@ -70,6 +75,10 @@ module NFLApi
       teams.map do |team_data|
         Team.new(team_data)
       end
+    end
+
+    def self.by_team_and_season(name_or_id, season_number)
+      by_season(season_number).detect { |t| [t.id, t.full_name].include? name_or_id }
     end
 
     private

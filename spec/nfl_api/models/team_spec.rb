@@ -23,13 +23,13 @@ describe NFLApi::Team do
 
   context ".season" do
     it "returns nil if nil is passed in" do
-      expect(described_class.season(nil)).to be_nil
+      expect(described_class.by_season(nil)).to be_nil
     end
 
     it "returns nil if no data is received from the API" do
       expect(described_class).to receive(:parse_json).with("http://www.nfl.com/feeds-rs/teams/1938.json").and_return(nil)
 
-      expect(described_class.season(1938)).to be_nil
+      expect(described_class.by_season(1938)).to be_nil
     end
 
     it "returns the correct number of teams for a prior season" do
@@ -38,13 +38,53 @@ describe NFLApi::Team do
       teams = 32
       pro_bowl_teams = 2
       total_teams = teams + pro_bowl_teams
-      expect(described_class.season(2018).count).to eq total_teams
+      expect(described_class.by_season(2018).count).to eq total_teams
     end
 
     it "returns the correct season for a prior season" do
       expect(described_class).to receive(:season_specific_endpoint).and_return(season_specific_endpoint)
 
-      expect(described_class.season(2018).first.season).to eq 2018
+      expect(described_class.by_season(2018).first.season).to eq 2018
+    end
+  end
+
+  context ".by_team" do
+    context "with team name" do
+      it "returns the correct team" do
+        expect(described_class).to receive(:endpoint).and_return(current_season_endpoint)
+
+        expect(described_class.by_team("Washington Redskins").id).to eq 5110
+      end
+    end
+
+    context "with team id" do
+      it "returns the correct team" do
+        expect(described_class).to receive(:endpoint).and_return(current_season_endpoint)
+
+        expect(described_class.by_team(5110).full_name).to eq "Washington Redskins"
+      end
+    end
+  end
+
+  context ".by_team_and_season" do
+    context "with team name and season year" do
+      it "returns the correct team" do
+        expect(described_class).to receive(:season_specific_endpoint).and_return(season_specific_endpoint)
+
+        team = described_class.by_team_and_season("Washington Redskins", 2018)
+        expect(team.id).to eq 5110
+        expect(team.season).to eq 2018
+      end
+    end
+
+    context "with team id and season year" do
+      it "returns the correct team" do
+        expect(described_class).to receive(:season_specific_endpoint).and_return(season_specific_endpoint)
+
+        team = described_class.by_team_and_season(5110, 2018)
+        expect(team.full_name).to eq "Washington Redskins"
+        expect(team.season).to eq 2018
+      end
     end
   end
 end
