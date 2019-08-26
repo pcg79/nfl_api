@@ -65,4 +65,26 @@ describe NFLApi::Team do
       end
     end
   end
+
+  context ".by_team_and_season" do
+    context "with team name and season year" do
+      it "returns the correct team" do
+        expect(described_class).to receive(:season_specific_endpoint).and_return(season_specific_endpoint)
+
+        team = described_class.by_team_and_season("Washington Redskins", 2018)
+        expect(team.id).to eq 5110
+        expect(team.season).to eq 2018
+      end
+    end
+
+    context "with team id" do
+      it "returns the correct team" do
+        expect(described_class).to receive(:season_specific_endpoint).and_return(season_specific_endpoint)
+
+        team = described_class.by_team_and_season(5110, 2018)
+        expect(team.full_name).to eq "Washington Redskins"
+        expect(team.season).to eq 2018
+      end
+    end
+  end
 end

@@ -77,6 +77,10 @@ module NFLApi
       end
     end
 
+    def self.by_team_and_season(name_or_id, season_number)
+      by_season(season_number).detect { |t| [t.id, t.full_name].include? name_or_id }
+    end
+
     private
 
     def set_conference(conference_params)
