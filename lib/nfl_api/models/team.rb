@@ -64,7 +64,8 @@ module NFLApi
     end
 
     def self.by_season(season_number)
-      return nil unless season_number
+      return nil if season_number.to_i < NFLApi::NFL_START_YEAR
+
       json_data = parse_json(season_specific_endpoint(season_number))
 
       return nil unless json_data
