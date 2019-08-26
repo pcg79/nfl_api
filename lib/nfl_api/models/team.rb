@@ -63,7 +63,7 @@ module NFLApi
       all.detect { |t| [t.id, t.full_name].include? name_or_id }
     end
 
-    def self.season(season_number)
+    def self.by_season(season_number)
       return nil unless season_number
       json_data = parse_json(season_specific_endpoint(season_number))
 

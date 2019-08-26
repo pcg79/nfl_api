@@ -23,13 +23,13 @@ describe NFLApi::Team do
 
   context ".season" do
     it "returns nil if nil is passed in" do
-      expect(described_class.season(nil)).to be_nil
+      expect(described_class.by_season(nil)).to be_nil
     end
 
     it "returns nil if no data is received from the API" do
       expect(described_class).to receive(:parse_json).with("http://www.nfl.com/feeds-rs/teams/1938.json").and_return(nil)
 
-      expect(described_class.season(1938)).to be_nil
+      expect(described_class.by_season(1938)).to be_nil
     end
 
     it "returns the correct number of teams for a prior season" do
@@ -38,13 +38,13 @@ describe NFLApi::Team do
       teams = 32
       pro_bowl_teams = 2
       total_teams = teams + pro_bowl_teams
-      expect(described_class.season(2018).count).to eq total_teams
+      expect(described_class.by_season(2018).count).to eq total_teams
     end
 
     it "returns the correct season for a prior season" do
       expect(described_class).to receive(:season_specific_endpoint).and_return(season_specific_endpoint)
 
-      expect(described_class.season(2018).first.season).to eq 2018
+      expect(described_class.by_season(2018).first.season).to eq 2018
     end
   end
 

@@ -26,7 +26,7 @@ Or install it yourself as:
 require 'nfl_api'
 
 NFLApi::Team.all  # Array of teams
-NFLApi::Team.season(2018) # Array of teams from 2018
+NFLApi::Team.by_season(2018) # Array of teams from 2018
 ```
 
 ## Development
