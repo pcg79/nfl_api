@@ -84,6 +84,8 @@ module NFLApi
     private
 
     def set_conference(conference_params)
+      return unless conference_params
+
       conference_id = conference_params["id"]
       if Team.conferences[conference_id]
         @conference = Team.conferences[conference_id]
@@ -94,13 +96,13 @@ module NFLApi
     end
 
     def set_division(division_params)
-      if division_params
-        division_id = division_params["id"]
-        if Team.divisions[division_id]
-          @division = Team.divisions[division_id]
-        else
-          @division = Division.new(division_params)
-        end
+      return unless division_params
+
+      division_id = division_params["id"]
+      if Team.divisions[division_id]
+        @division = Team.divisions[division_id]
+      else
+        @division = Division.new(division_params)
       end
       Team.divisions[division_id] = @division
     end
