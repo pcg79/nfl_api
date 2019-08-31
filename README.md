@@ -26,7 +26,10 @@ Or install it yourself as:
 require 'nfl_api'
 
 NFLApi::Team.all  # Array of teams
-NFLApi::Team.by_season(2018) # Array of teams from 2018
+NFLApi::Team.by_season(2018) # Array of `Team`s from 2018
+
+NFLApi::Roster.by_team("Washington Redskins") # Array of `Player`s currently on the Washington Redskins
+NFLApi::Roster.by_team_and_season("Washington Redskins", 2018) # Array of `Player`s on the Washington Redskins 2018 squad
 ```
 
 ## Development
@@ -45,4 +48,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the NflApi project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/pcg79/nfl_api/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the NFLApi project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/pcg79/nfl_api/blob/master/CODE_OF_CONDUCT.md).
